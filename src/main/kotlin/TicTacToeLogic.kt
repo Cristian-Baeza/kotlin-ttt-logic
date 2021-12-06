@@ -5,7 +5,7 @@ class TicTacToeLogic {
     "available", "available"
   )
 
-  val winCombos = arrayOf(
+  private val winCombos = arrayOf(
     arrayOf(0, 1, 2), // top_row
     arrayOf(3, 4, 5), // middle_row
     arrayOf(6, 7, 8), // bottom_row
@@ -14,10 +14,9 @@ class TicTacToeLogic {
     arrayOf(2, 5, 8), // right_column
     arrayOf(0, 4, 8), // left_diagonal
     arrayOf(6, 4, 2) // right_diagonal
-
   )
 
-  fun turnCount(): Int {
+  private fun turnCount(): Int {
     return board.size - board.count { it == "available" }
   }
 
