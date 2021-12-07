@@ -1,8 +1,15 @@
+import models.BoardSpaceType
+
 class TicTacToeLogic {
 
+    private var playerOne = BoardSpaceType.PLAYER_ONE
+    private var playerTwo = BoardSpaceType.PLAYER_TWO
+    private var available = BoardSpaceType.AVAILABLE
+    private var tie = BoardSpaceType.TIE
+
     var board = arrayOf(
-        "available", "available", "available", "available", "available", "available", "available",
-        "available", "available"
+        available, available, available, available, available, available, available,
+        available, available
     )
 
     private val winCombos = arrayOf(
@@ -17,38 +24,38 @@ class TicTacToeLogic {
     )
 
     private fun turnCount(): Int {
-        return board.size - board.count { it == "available" }
+        return board.size - board.count { it == available }
     }
 
-    fun currentPlayer(): String {
-        return if (turnCount() % 2 == 0) "playerOne" else "playerTwo"
+    fun currentPlayer(): BoardSpaceType {
+        return if (turnCount() % 2 == 0) playerOne else playerTwo
     }
 
     fun playMove(spaceToPlay: Int) {
-        if (board[spaceToPlay] == "available")
+        if (board[spaceToPlay] == available)
             board[spaceToPlay] = currentPlayer()
     }
 
     fun boardFull(): Boolean {
-        return !board.contains("available")
+        return !board.contains(available)
     }
 
-    fun winner(): String? {
-        var winner: String? = null
+    fun winner(): BoardSpaceType? {
+        var winner: BoardSpaceType? = null
 
         for (win_combo in winCombos) {
-            val row = ArrayList<String>()
+            val row = ArrayList<BoardSpaceType>()
             for (index in win_combo) {
                 row.add(board[index])
             }
             if (row.all { it == row[0] }) {
-                if (row[0] != "available") {
+                if (row[0] != available) {
                     winner = row[0]
                 }
             }
         }
         if (boardFull() && winner == null)
-            winner = "tie"
+            winner = tie
         return winner
     }
 
