@@ -243,10 +243,7 @@ internal class TicTacToeLogicTest {
         game.board[6] = playerTwo
         game.board[7] = playerTwo
 
-
         val expected = 2
         assertEquals(expected, game.bestMove())
     }
-
-
 }
