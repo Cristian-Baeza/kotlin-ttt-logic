@@ -107,5 +107,4 @@ class TicTacToeLogic {
         }
         return space
     }
-
 }
