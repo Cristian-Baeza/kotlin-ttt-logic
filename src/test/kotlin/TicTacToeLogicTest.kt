@@ -152,4 +152,101 @@ internal class TicTacToeLogicTest {
         val expected = false
         assertEquals(expected, game.gameOver())
     }
+
+    @Test
+    fun `openSpaces- returns array of available spots by index`() {
+        game.board[1] = playerTwo
+        game.board[2] = playerOne
+        game.board[3] = playerOne
+        game.board[4] = playerOne
+
+        val expected = mutableListOf(0, 5, 6, 7, 8)
+        assertEquals(expected, game.openSpaces())
+    }
+
+    @Test
+    fun `cpuTakeOpenSpace- returns random available space in array`() {
+        game.board[0] = playerOne
+        game.board[1] = playerOne
+        game.board[2] = playerOne
+        game.board[3] = playerOne
+        game.board[4] = playerOne
+        game.board[5] = playerOne
+        game.board[6] = playerOne
+        game.board[7] = playerOne
+
+        val expected = 8
+        assertEquals(expected, game.cpuTakeOpenSpace())
+    }
+
+    @Test
+    fun `nonCurrentPlayer- returns the player who's turn it isn't`() {
+        game.board[0] = playerOne
+        game.board[1] = playerTwo
+        game.board[2] = playerOne
+
+        val expected = playerOne
+        assertEquals(expected, game.nonCurrentPlayer())
+    }
+
+    @Test
+    fun `bestMove- returns winning move - horizontal win`() {
+        game.board[1] = playerOne
+        game.board[2] = playerOne
+
+        val expected = 0
+        assertEquals(expected, game.bestMove())
+    }
+
+    @Test
+    fun `bestMove- returns winning move - vertical win`() {
+        game.board[3] = playerOne
+        game.board[6] = playerOne
+
+        val expected = 0
+        assertEquals(expected, game.bestMove())
+    }
+
+    @Test
+    fun `bestMove- returns winning move - diagonal win`() {
+        game.board[4] = playerOne
+        game.board[8] = playerOne
+
+        val expected = 0
+        assertEquals(expected, game.bestMove())
+    }
+
+    @Test
+    fun `bestMove- wins over blocking when it is playerTwo turn`() {
+        //   X X 2
+        //   X 4 5
+        //   O O 8
+        // the best move should be space 8. As it is currently player 2's turn and that move will win
+        game.board[0] = playerOne
+        game.board[1] = playerOne
+        game.board[3] = playerOne
+        game.board[6] = playerTwo
+        game.board[7] = playerTwo
+
+        val expected = 8
+        assertEquals(expected, game.bestMove())
+    }
+
+    @Test
+    fun `bestMove- wins over blocking when it is playerOne turn`() {
+        //   X X 2
+        //   3 4 5
+        //   O O 8
+        // the best move should be space 2. As it is currently player 1's turn and that move will win
+        game.board[0] = playerOne
+        game.board[1] = playerOne
+        game.board[6] = playerTwo
+        game.board[7] = playerTwo
+
+
+        val expected = 2
+        assertEquals(expected, game.bestMove())
+    }
+
+
 }
