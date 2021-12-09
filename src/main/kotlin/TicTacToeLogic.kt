@@ -62,4 +62,44 @@ class TicTacToeLogic {
     fun gameOver(): Boolean {
         return boardFull() || (winner() != null)
     }
+
+    fun bestMove(): Int {
+        var move = checkForWinsOrBlocks(currentPlayer())
+        if (move == null) {
+            move = checkForWinsOrBlocks(nonCurrentPlayer())
+        }
+        if (move == null) {
+            move = openSpaces().random()
+        }
+        return move
+    }
+
+    fun openSpaces(): MutableList<Int> {
+        val arrayOfOpenSpaces = mutableListOf<Int>()
+        for ((index) in board.withIndex()) {
+            if (board[index] == available)
+                arrayOfOpenSpaces.add(index)
+        }
+        return arrayOfOpenSpaces
+    }
+
+    fun nonCurrentPlayer(): BoardSpaceType {
+        return if (currentPlayer() == playerOne) playerTwo else playerOne
+    }
+
+    private fun checkForWinsOrBlocks(playerSymbol: BoardSpaceType): Int? {
+        var space: Int? = null
+        for (win_combo in winCombos) {
+            val row = ArrayList<BoardSpaceType>()
+            for (index in win_combo) {
+                row.add(board[index])
+            }
+            if (row.count { e -> e == playerSymbol } == 2) {
+                if (row.contains(available)) {
+                    space = win_combo[row.indexOf(available)]
+                }
+            }
+        }
+        return space
+    }
 }
