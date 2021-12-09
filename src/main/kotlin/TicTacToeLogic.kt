@@ -64,17 +64,16 @@ class TicTacToeLogic {
     }
 
     fun bestMove(): Int {
-        var move = cpuCheckForWinsOrBlocks(currentPlayer())
+        var move = checkForWinsOrBlocks(currentPlayer())
         if (move == null) {
-            move = cpuCheckForWinsOrBlocks(nonCurrentPlayer())
+            move = checkForWinsOrBlocks(nonCurrentPlayer())
         }
         if (move == null) {
-            move = cpuTakeOpenSpace()
+            move = openSpaces().random()
         }
         return move
     }
 
-    // HELPER METHODS FOR bestMove method
     fun openSpaces(): MutableList<Int> {
         val arrayOfOpenSpaces = mutableListOf<Int>()
         for ((index) in board.withIndex()) {
@@ -84,15 +83,11 @@ class TicTacToeLogic {
         return arrayOfOpenSpaces
     }
 
-    fun cpuTakeOpenSpace(): Int {
-        return openSpaces().random()
-    }
-
     fun nonCurrentPlayer(): BoardSpaceType {
         return if (currentPlayer() == playerOne) playerTwo else playerOne
     }
 
-    private fun cpuCheckForWinsOrBlocks(playerSymbol: BoardSpaceType): Int? {
+    private fun checkForWinsOrBlocks(playerSymbol: BoardSpaceType): Int? {
         var space: Int? = null
         for (win_combo in winCombos) {
             val row = ArrayList<BoardSpaceType>()

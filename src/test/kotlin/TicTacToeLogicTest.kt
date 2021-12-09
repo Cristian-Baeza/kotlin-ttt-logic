@@ -165,21 +165,6 @@ internal class TicTacToeLogicTest {
     }
 
     @Test
-    fun `cpuTakeOpenSpace- returns random available space in array`() {
-        game.board[0] = playerOne
-        game.board[1] = playerOne
-        game.board[2] = playerOne
-        game.board[3] = playerOne
-        game.board[4] = playerOne
-        game.board[5] = playerOne
-        game.board[6] = playerOne
-        game.board[7] = playerOne
-
-        val expected = 8
-        assertEquals(expected, game.cpuTakeOpenSpace())
-    }
-
-    @Test
     fun `nonCurrentPlayer- returns the player who's turn it isn't`() {
         game.board[0] = playerOne
         game.board[1] = playerTwo
